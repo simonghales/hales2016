@@ -1,0 +1,9 @@
+%font--default {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  @extend %font--default;
+  color: #111012;
+  font-size: 16px;
+}
