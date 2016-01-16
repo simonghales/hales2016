@@ -1,5 +1,7 @@
 {
   "name": "hales2016",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "underscore": "~1.8.3"
+  }
 }
