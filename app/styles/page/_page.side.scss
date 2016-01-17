@@ -1,0 +1,100 @@
+.page-sides {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  width: $side-width;
+}
+
+$cubic: cubic-bezier(.825,0,.5,1);
+
+.page-side {
+  //@include transition(transform 500ms $cubic);
+  @include transition(opacity 500ms $cubic);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.hidden {
+    //transform: translate(0, -100%);
+    opacity: 0;
+
+    .page-side__preview {
+      transform: scale(0.5);
+    }
+
+  }
+
+  &.hidden-strict {
+    display: none;
+  }
+
+}
+
+// loop through page-side--[N] and decrease z-index
+
+$page-index-base: 50;
+
+.page-side--1 {
+  background-image: url(/images/me2.jpg);
+  z-index: $page-index-base - 1;
+}
+
+.page-side--2 {
+  background-image: url(/images/pages/page-soonis.jpg);
+  z-index: $page-index-base - 2;
+
+  .page-side__preview {
+    @include image-2x('/images/pages/card-soonis@2x.jpg', 440, 340);
+    background-image: url(/images/pages/card-soonis.jpg);
+  }
+
+}
+
+.page-side--3 {
+  background-image: url(/images/pages/page-yepis.jpg);
+  z-index: $page-index-base - 3;
+
+  .page-side__preview {
+    @include image-2x('/images/pages/card-yepis@2x.jpg', 440, 340);
+    background-image: url(/images/pages/card-yepis.jpg);
+  }
+
+
+}
+
+.page-side--4 {
+  background-image: url(/images/pages/page-art.jpg);
+  z-index: $page-index-base - 4;
+
+  .page-side__preview {
+    @include image-2x('/images/pages/card-art@2x.jpg', 440, 340);
+    background-image: url(/images/pages/card-art.jpg);
+  }
+
+
+}
+
+.page-side__preview {
+  @include box-shadow(0, 0, 20px, rgba(0,0,0,0.1));
+  @include transition(transform 500ms $cubic);
+  width: 100%;
+  max-width: 440px;
+  height: 340px;
+  background-color: #ffffff;
+  background-size: cover;
+  background-position: center;
+}

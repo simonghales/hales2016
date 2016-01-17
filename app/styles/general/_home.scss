@@ -7,11 +7,13 @@ $side-width: 520px;
   display: flex;
   align-items: center;
   padding-right: $side-width;
+  border-bottom: 1px solid #EEEEEE;
 
 
   &.main-section--dark {
     color: #ffffff;
     background-color: #111012;
+    border-color: #111012;
   }
 
 }
@@ -57,56 +59,7 @@ $side-width: 520px;
   }
 
 
-  .page-sides {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 50;
-    width: $side-width;
-  }
 
-  $cubic: cubic-bezier(.825,0,.5,1);
-
-    .page-side {
-      @include transition(transform 500ms $cubic);
-
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
-
-      background-size: cover;
-      background-position: center;
-
-      &.hidden {
-        transform: translate(0, -100%);
-      }
-
-    }
-
-    // loop through page-side--[N] and decrease z-index
-
-$page-index-base: 50;
-
-    .page-side--1 {
-      background-image: url(/images/me2.jpg);
-      z-index: $page-index-base - 1;
-    }
-
-    .page-side--2 {
-      background-image: url(/images/nhkcreature.jpg);
-      z-index: $page-index-base - 2;
-    }
-
-
-    .page-side--3 {
-      background-image: url(/images/strawberry.jpg);
-      z-index: $page-index-base - 3;
-    }
 
 
 .info {
