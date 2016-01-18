@@ -27,7 +27,7 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <section class="page-sides">
+    <section id="page-sides" class="page-sides">
       <aside class="page-side page-side--1 js--side-section"></aside>
       <aside class="page-side page-side--2 js--side-section">
         <div class="page-side__preview"></div>
@@ -38,41 +38,26 @@
       <aside class="page-side page-side--4 js--side-section">
         <div class="page-side__preview"></div>
       </aside>
-      <aside class="page-side page-side--5 js--side-section"></aside>
+      <!--<aside class="page-side page-side&#45;&#45;5 js&#45;&#45;side-section"></aside>-->
     </section>
-
-      <ul id="page-nav--white" class="page-nav page-nav--white hidden">
-        <li>
-          <a>Home</a>
-        </li>
-        <li>
-          <a>About</a>
-        </li>
-        <li>
-          <a>Projects</a>
-        </li>
-        <li class="active">
-          <a>Bio</a>
-        </li>
-      </ul>
 
       <ul id="page-nav--dark" class="page-nav page-nav--dark">
         <li class="js--nav-option">
-          <a>Home</a>
+          <a section-index="0">Home</a>
         </li>
         <li class="js--nav-option">
-          <a>About</a>
+          <a section-index="1">About</a>
         </li>
         <li class="js--nav-option">
-          <a>Projects</a>
+          <a section-index="2">Projects</a>
         </li>
         <li class="js--nav-option">
-          <a>Bio</a>
+          <a section-index="4">Bio</a>
         </li>
       </ul>
 
     <section class="page">
-      <section class="main-section main-section--dark js--main-section">
+      <section class="main-section main-section--home main-section--dark js--main-section">
         <div class="main-section__side-text">
           <h1>Simon Hales</h1>
           <h2>Frontend Developer</h2>
@@ -99,8 +84,9 @@
             </li>
           </ul>
         </div>
+        <div class="main-section__side-bg"></div>
       </section>
-      <section class="main-section js--main-section">
+      <section class="main-section main-section--soon js--main-section">
         <div class="main-section__side-text">
           <h3>soon.is</h3>
           <div class="info">
@@ -131,8 +117,9 @@
             </ul>
           </div>
         </div>
+        <div class="main-section__side-bg"></div>
       </section>
-      <section class="main-section js--main-section">
+      <section class="main-section main-section--yep js--main-section">
         <div class="main-section__side-text">
           <h3>yep.is</h3>
           <div class="info">
@@ -163,8 +150,9 @@
             </ul>
           </div>
         </div>
+        <div class="main-section__side-bg"></div>
       </section>
-      <section class="main-section js--main-section">
+      <section class="main-section main-section--art js--main-section">
         <div class="main-section__side-text">
           <h3>Digital Art</h3>
           <div class="info">
@@ -195,8 +183,9 @@
             </ul>
           </div>
         </div>
+        <div class="main-section__side-bg"></div>
       </section>
-      <section class="main-section main-section--dark js--main-section">
+      <section class="main-section main-section--end main-section--dark js--main-section">
         <div class="main-section__side-text">
           <h1>Simon Hales</h1>
           <h2>Frontend Developer</h2>

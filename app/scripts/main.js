@@ -37,8 +37,12 @@
   function initNav() {
     elements.navOptions = document.getElementsByClassName("js--nav-option");
     elements.pageNavDark = document.getElementById('page-nav--dark');
-    elements.pageNavWhite = document.getElementById('page-nav--white');
-    scrollValues.pageNavHeight = (elements.pageNavWhite.offsetHeight) ? elements.pageNavWhite.offsetHeight : elements.pageNavDark.offsetHeight;
+    scrollValues.pageNavHeight = elements.pageNavDark.offsetHeight;
+
+    for(var i = 0, len = elements.navOptions.length; i < len; i++) {
+      elements.navOptions[i].getElementsByTagName('a')[0].addEventListener('click', navClick);
+    }
+
     updateNav(0);
   }
 
@@ -48,13 +52,25 @@
 
     window.addEventListener("resize", updateSectionHeights, false);
     window.addEventListener("orientationchange", updateSectionHeights, false);
-    window.addEventListener("scroll", _.throttle(scrollUpdate, 50), false);
+    window.addEventListener("scroll", _.throttle(scrollUpdate, 100), false);
 
   }
 
   function initSideSections() {
+    elements.sideSectionWrapper = document.getElementById("page-sides");
     elements.sideSections = document.getElementsByClassName("js--side-section");
     scrollUpdate();
+  }
+
+  function navClick(event) {
+    console.log("clicked on a nav!", event.target.getAttribute('section-index'));
+
+    var index = event.target.getAttribute('section-index');
+
+    //window.scrollTo(0, (index * scrollValues.screenHeight));
+
+    scrollToY((index * scrollValues.screenHeight), 750, 'easeInOutQuint');
+
   }
 
   function updateNav(index) {
@@ -70,22 +86,6 @@
         elements.navOptions[i].removeClass('active');
       }
     }
-
-  }
-
-  function updateNavWhite(offset) {
-
-    // todo, it keeps reverting to 3 values weird
-
-    console.log("offset", offset);
-
-    elements.pageNavWhite.style.clipPath = "inset(" + offset + "px 0px 0px 0px)";
-    elements.pageNavWhite.style.webkitClipPath = "inset(" + offset + "px 0px 0px 0px)";
-
-    var invertedOffset = scrollValues.pageNavHeight - offset;
-
-    elements.pageNavDark.style.clipPath = "inset(0px 0px " + offset + "px 0px)";
-    elements.pageNavDark.style.webkitClipPath = "inset(0px 0px " + offset + "px 0px)";
 
   }
 
@@ -120,8 +120,23 @@
       }
     }
 
+    if(maxIndex >= elements.sideSections.length) {
+      elements.sideSections[(elements.sideSections.length - 1)].removeClass("hidden");
+      console.log("beyond the last page");
+    }
+
     updateNav(maxIndex);
 
+  }
+
+  function resetSide() {
+    elements.sideSectionWrapper.removeClass('absolute');
+  }
+
+  function setSideAbsolute() {
+    elements.sideSectionWrapper.classList.add('absolute');
+    elements.sideSectionWrapper.style.height = scrollValues.screenHeight + 'px';
+    elements.sideSectionWrapper.style.bottom = scrollValues.screenHeight + 'px';
   }
 
   function scrollUpdate() {
@@ -155,15 +170,19 @@
     var documentHeight = Math.max( body.scrollHeight, body.offsetHeight,
       html.clientHeight, html.scrollHeight, html.offsetHeight );
 
-    if (scrollValues.top > (documentHeight - scrollValues.screenHeight - scrollValues.pageNavHeight) - scrollValues.pageNavOffset) {
-      var offset = ((documentHeight - scrollValues.screenHeight) - scrollValues.top) - scrollValues.pageNavOffset;
-      console.log("near the bottom of the page", offset);
-      updateNavWhite(offset);
+    if (scrollValues.top > (documentHeight - scrollValues.screenHeight - scrollValues.pageNavHeight)) {
       //elements.pageNavDark.classList.add('hidden');
-      elements.pageNavWhite.removeClass('hidden');
+      elements.pageNavDark.classList.add('white');
     } else {
-      elements.pageNavWhite.classList.add('hidden');
+      elements.pageNavDark.removeClass('white');
       //elements.pageNavDark.removeClass('hidden');
+    }
+
+    if(scrollValues.top > (documentHeight - (scrollValues.screenHeight * 2))) {
+      console.log("in the final stretch");
+      setSideAbsolute();
+    } else {
+      resetSide();
     }
 
   }
@@ -179,6 +198,70 @@
       }
     }
     this.className = newClassName.trim();
+  }
+
+  // first add raf shim
+// http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+  window.requestAnimFrame = (function(){
+    return  window.requestAnimationFrame       ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame    ||
+      function( callback ){
+        window.setTimeout(callback, 1000 / 60);
+      };
+  })();
+
+// main function http://stackoverflow.com/a/26808520/2247841
+  function scrollToY(scrollTargetY, speed, easing) {
+    // scrollTargetY: the target scrollY property of the window
+    // speed: time in pixels per second
+    // easing: easing equation to use
+
+    var scrollY = window.scrollY,
+      scrollTargetY = scrollTargetY || 0,
+      speed = speed || 2000,
+      easing = easing || 'easeOutSine',
+      currentTime = 0;
+
+    // min time .1, max time .8 seconds
+    var time = Math.max(.1, Math.min(Math.abs(scrollY - scrollTargetY) / speed, .8));
+
+    // easing equations from https://github.com/danro/easing-js/blob/master/easing.js
+    var PI_D2 = Math.PI / 2,
+      easingEquations = {
+        easeOutSine: function (pos) {
+          return Math.sin(pos * (Math.PI / 2));
+        },
+        easeInOutSine: function (pos) {
+          return (-0.5 * (Math.cos(Math.PI * pos) - 1));
+        },
+        easeInOutQuint: function (pos) {
+          if ((pos /= 0.5) < 1) {
+            return 0.5 * Math.pow(pos, 5);
+          }
+          return 0.5 * (Math.pow((pos - 2), 5) + 2);
+        }
+      };
+
+    // add animation loop
+    function tick() {
+      currentTime += 1 / 60;
+
+      var p = currentTime / time;
+      var t = easingEquations[easing](p);
+
+      if (p < 1) {
+        requestAnimFrame(tick);
+
+        window.scrollTo(0, scrollY + ((scrollTargetY - scrollY) * t));
+      } else {
+        console.log('scroll done');
+        window.scrollTo(0, scrollTargetY);
+      }
+    }
+
+    // call it once to get started
+    tick();
   }
 
 })();

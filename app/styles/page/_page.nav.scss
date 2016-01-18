@@ -1,14 +1,26 @@
 
 .page-nav {
+  @include transition(background-color 250ms ease);
+
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 0px;
+  right: 0px;
   z-index: 1000;
+  padding: 10px;
 
   text-align: right;
   text-transform: uppercase;
   font-size: 13px;
   font-weight: 600;
+
+  &.white {
+    background-color: $clr-dark;
+
+    a {
+      color: #ffffff;
+    }
+
+  }
 
   &.hidden {
     display: none;
@@ -71,22 +83,6 @@
 
     }
 
-  }
-
-}
-
-.page-nav--dark {
-  //display: none;
-  //height: 50px;
-  //overflow: hidden;
-  clip-path: inset(0px 0px 0px 0px);
-}
-
-.page-nav--white {
-  clip-path: inset(100% 0px 0px 0px);
-
-  a {
-    color: rgba(255,255,255,1);
   }
 
 }
