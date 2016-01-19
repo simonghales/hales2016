@@ -60,14 +60,31 @@ $cubic: cubic-bezier(.825,0,.5,1);
 
 $page-index-base: 50;
 
-.page-side--1 {
+.page-side--home {
   background-image: url(/images/me2.jpg);
   z-index: $page-index-base - 1;
+
+  .page-side__preview {
+    @include image-2x('/images/pages/card-me@2x.jpg', 440, 340);
+    background-image: url(/images/pages/card-me.jpg);
+  }
+
 }
 
-.page-side--2 {
-  background-image: url(/images/pages/page-soonis.jpg);
+.page-side--about {
+  background-image: url(/images/mevector.jpg);
   z-index: $page-index-base - 2;
+
+  .page-side__preview {
+    @include image-2x('/images/pages/card-about@2x.jpg', 440, 340);
+    background-image: url(/images/pages/card-about.jpg);
+  }
+
+}
+
+.page-side--soon {
+  background-image: url(/images/pages/page-soonis.jpg);
+  z-index: $page-index-base - 3;
 
   .page-side__preview {
     @include image-2x('/images/pages/card-soonis@2x.jpg', 440, 340);
@@ -76,9 +93,9 @@ $page-index-base: 50;
 
 }
 
-.page-side--3 {
+.page-side--yep {
   background-image: url(/images/pages/page-yepis.jpg);
-  z-index: $page-index-base - 3;
+  z-index: $page-index-base - 4;
 
   .page-side__preview {
     @include image-2x('/images/pages/card-yepis@2x.jpg', 440, 340);
@@ -88,9 +105,9 @@ $page-index-base: 50;
 
 }
 
-.page-side--4 {
+.page-side--art {
   background-image: url(/images/pages/page-art.jpg);
-  z-index: $page-index-base - 4;
+  z-index: $page-index-base - 5;
 
   .page-side__preview {
     @include image-2x('/images/pages/card-art@2x.jpg', 440, 340);

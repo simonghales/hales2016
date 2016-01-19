@@ -16,3 +16,39 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+// Titles
+
+.title-main {
+  text-transform: uppercase;
+  font-size: 3em;
+  line-height: 1.2em;
+  font-weight: 300;
+}
+
+.text-option {
+  @include transition(all 250ms ease);
+  color: #B8B8B8;
+  cursor: pointer;
+  margin-top: 12px;
+  text-transform: uppercase;
+
+  &:active {
+    transform: translate(0, 2px);
+  }
+
+  &:hover {
+    color: #646267;
+
+    .text {
+      //text-decoration: underline;
+    }
+
+  }
+
+  .text {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+}
